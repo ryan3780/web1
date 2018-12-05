@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+    <head>
 
-<meta charset="utf-8">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="jq.js"></script>
+    </head>
 
-</head>
+<script type="text/javascript">
+  
+$(document).ready(function() {
+    var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = year + "-" + month + "-" + day;       
+    $("#theDate").attr("value", today);
+});
+
+</script>
 
 <body>
 <form action="" method="post" ENCTYPE="multipart/form-data" name="insert">
      <div class="row"> <!-- 입력폼 -->
   <div class="col-md-12">
-         <div class="panel panel-primary regPanel">
-             <div class="panel-heading" align="center">
+         <div class="panel panel-primary">
+             <div class="panel-heading" align="center" style="font-size: 36px">
     <strong>게임즈IDC 업무일지</strong>
              </div>
          <div class="panel-body">
@@ -38,10 +57,10 @@
                        <div class="panel-body">
                           <select class="form-control" id="first_tag" name="first_tag">
                                 <option value="">요청 선택</option>
-                                <option value="장비설치">서버 작업</option>
-                                <option value="장애업무">파트 작업</option>
-                                <option value="자산업무">일반 업무</option>
-                                <option value="기타업무">장애 업무</option>
+                                <option value="서버작업">서버 작업</option>
+                                <option value="파트작업">파트 작업</option>
+                                <option value="일반업무">일반 업무</option>
+                                <option value="장애업무">장애 업무</option>
                                 
                           </select>
                        </div>
@@ -54,7 +73,7 @@
                        </div>
                        <div class="panel-body">
                           <select class="form-control" name="second_tag" id="second_tag">
-                                <option value="">유형 선택</option>
+                                
                           </select>
                        </div>
                  </div>
