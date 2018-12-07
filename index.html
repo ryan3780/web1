@@ -29,7 +29,7 @@ $(document).ready(function() {
 </script>
 
 <body>
-<form action="" method="post" ENCTYPE="multipart/form-data" name="insert">
+<form action="1.php" method="post" ENCTYPE="multipart/form-data" name="insert">
      <div class="row"> <!-- 입력폼 -->
   <div class="col-md-12">
          <div class="panel panel-primary">
@@ -148,10 +148,11 @@ $(document).ready(function() {
          <div class="row">
                 <div class="container-fluid">
       <div class="form-actions col-md-11" align="right">
-                               <button type="submit" class="btn btn-primary" name="save" id="saveBtn" onclick="save_event();return false;">저  장 <span class="glyphicon glyphicon-saved"></span></button>
-                                <button type="reset" class="btn btn-warning" name="reset" id="resetBtn" >초기화 <span class="glyphicon glyphicon-refresh" tool-tip-toggle="tooltip-demo" data-original-title="Font awesome spin"></span></button>
-                        </div>
-                </div>
+       <button type="submit" class="btn btn-primary" name="save" id="saveBtn" >저  장 <span class="glyphicon glyphicon-saved"></span></button>
+       <button type="reset" class="btn btn-warning" name="reset" id="resetBtn" >초기화 <span class="glyphicon glyphicon-refresh"  ></span></button>
+                        
+            </div>
+       </div>
 </form>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
@@ -166,8 +167,8 @@ $(document).ready(function() {
             <th></th>
             <th>날짜</th>
             
-            <th>대분류</th>
-            <th>중분류</th>
+            <th>요청유형</th>
+            <th>유형</th>
           
             <th>작업수량</th>
             <th>작업시간</th>
