@@ -1,33 +1,33 @@
 $(function(){
   $("#first_tag").on("change", function(){
-    var s1 = $("#second_tag");
-    var s2 = $(this).val();
+
+
     if($(this).val() == '파트작업'){
       typeChoice($(this).val());
-      $("#second_tag").removeAttr("disabled");
+      //$("#second_tag").removeAttr("disabled");
+
     } 
     else if($(this).val() == '서버작업'){
       typeChoice1($(this).val());
-      $("#second_tag").removeAttr("disabled");
+      //$("#second_tag").removeAttr("disabled");
     } 
     else if($(this).val() == '일반업무'){
       typeChoice2($(this).val());
-      $("#second_tag").removeAttr("disabled");
+      //$("#second_tag").removeAttr("disabled");
     }
     else if($(this).val() == '장애업무'){
       typeChoice3($(this).val());
-      $("#second_tag").removeAttr("disabled");
+     //$("#second_tag").removeAttr("disabled");
     }
      else{
       $("#second_tag").empty();
-      $("#second_tag").attr("disabled", "disabled");
-    } 
-  
-  });
 
-  
-  $("#second_tag").attr("disabled", "disabled");
-  
+      
+    } 
+      
+  });
+    
+    
   
   function typeChoice(){
       var part = ["파트 제거","파트 증설","파트 용도 변경"];
@@ -64,3 +64,7 @@ $(function(){
 
 
 });
+
+
+
+

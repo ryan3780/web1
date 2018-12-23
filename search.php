@@ -31,12 +31,12 @@ $(document).ready(function() {
 <body>
           
 
-<form action="insert.php" method="post" ENCTYPE="multipart/form-data" name="insert" id ="re">
+<form action="insert.php" method="post" ENCTYPE="multipart/form-data" name="insert">
      <div class="row"> <!-- 입력폼 -->
   <div class="col-md-12">
         <div class="panel panel-primary">
              <div class="panel-heading" align="center" style="font-size: 36px">
-    <strong><a href = "index.html" style="text-decoration:none; color: #ffffff;" >게임즈IDC 업무일지</a></strong>
+   <strong><a href = "index.html" style="text-decoration:none; color: #ffffff;" >게임즈IDC 업무일지</a></strong>
              </div>
          <div class="panel-body">
              <div class="col-md-2">
@@ -88,7 +88,7 @@ $(document).ready(function() {
                        </div>
                        <div class="panel-body">
 
-      <input class="form-control" name="work_num" type="number"  placeholder="휴일 작성 제외" autocomplete="off">
+      <input class="form-control" name="work_num" type="text"  placeholder="휴일 작성 제외" autocomplete="off">
                        </div>
                  </div>
              </div>
@@ -98,7 +98,7 @@ $(document).ready(function() {
                             <strong>소요시간</strong>
                        </div>
                        <div class="panel-body">
-      <input class="form-control" name="work_time" type="number"  placeholder="휴일 작성 제외(10분 단위로 기입)" autocomplete="off">
+      <input class="form-control" name="work_time" type="text"  placeholder="휴일 작성 제외(10분 단위로 기입)" autocomplete="off">
                        </div>
                  </div>
 
@@ -161,22 +161,18 @@ $(document).ready(function() {
          <div class="row">
                 <div class="container-fluid">
       <div class="form-actions col-md-11" align="right">
-       <button type="submit" class="btn btn-primary" name="save" id="saveBtn">저  장 <span class="glyphicon glyphicon-saved"></span></button>
+       <button type="submit" class="btn btn-primary" name="save" id="saveBtn" >저  장 <span class="glyphicon glyphicon-saved"></span></button>
        <button type="reset" class="btn btn-warning" name="reset" id="resetBtn" >초기화 <span class="glyphicon glyphicon-refresh"  ></span></button>
                         
             </div>
        </div>
 </form>
+
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
   <div class="row">
  <div class="container">
-
-          
-
-      <!-- 원래 테이블 자리  -->
-
-    <table id="gsTable" class="table table-striped table-hover" style="width:100%">
+<table id="gsTable" class="table table-striped table-hover" style="width:100%">
         <thead>
           <tr>
             <th>날짜</th>
@@ -192,11 +188,11 @@ $(document).ready(function() {
           </tr>
         </thead>
         <tbody>
+
 <?php
+ include 'db_config.php';
 
-include 'db_config.php';
-
-$result = mysqli_query($conn,"SELECT * FROM record_work WHERE date = CURDATE();");
+ $result = mysqli_query($conn,"SELECT * FROM record_work WHERE DATE(date) BETWEEN '".$_REQUEST['stime']."' AND '".$_REQUEST['etime']."' ORDER BY DATE ASC");
 
 while($row = mysqli_fetch_array($result)){
 
@@ -210,27 +206,45 @@ while($row = mysqli_fetch_array($result)){
     echo "<td>" . $row['wn'] . "</td>";
     echo "<td>" . $row['wnum'] . "</td>";
     echo '<td> <a class="btn btn-success" href="edit.php?edit='.$row['idx'].'">Update</a> </td>';
-    echo '<td> <a class="btn btn-danger" href="del.php?del='.$row['idx'].'">Delete</a> </td>';
+    echo '<td> <a class="btn btn-danger" href="search_del.php?del='.$row['idx'].'">Delete</a> </td>';
     echo "</tr>";
+
+
 
 }
 
 $result -> free();
 
-$conn->close();
+$conn->close();  
+
 
 ?>
-        </tbody>
+
+</tbody>
       </table>
+
+<div class="row">
+<form class="navbar-form navbar-right" name="search" method="post" action="search.php">
+                            <div class="input-group">
+                                    <span class="input-group-addon">기간</span>
+                                    <input type="date" class="form-control" name="stime">
+                                    <span class="input-group-addon">~</span>
+                                    <input type="date" class="form-control" name="etime">
+                                </div>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>검색</button>
+<button type="submit" class="btn btn-primary" method="post" formaction="xml.php"><span>Excel Download  <i class="glyphicon glyphicon-save"></i></span></button>
+</form>
+</div>
+ 
  <?php
 
 include 'db_config.php';
 
-$result = mysqli_query($conn,"SELECT sum(wt) wt, wn FROM record_work WHERE date = CURDATE() GROUP BY wn ");
+$result = mysqli_query($conn,"SELECT sum(wt) wt, wn FROM record_work WHERE DATE(date) BETWEEN '".$_REQUEST['stime']."' AND '".$_REQUEST['etime']."' GROUP BY wn ");
 
 while($row = mysqli_fetch_array($result)){
 
- if($row['wn'] === "jenny, eddie"){
+  if($row['wn'] === "jenny, dana"){
 
     echo "작업시간 : ";
     echo $row['wn'];
@@ -259,21 +273,27 @@ $result -> free();
 $conn->close();
 
 ?>
- <div class="row">
-<form class="navbar-form navbar-right" name="search" method="post" action="search.php">
-                            <div class="input-group">
-                                    <span class="input-group-addon">기간</span>
-                                    <input type="date" class="form-control" name="stime">
-                                    <span class="input-group-addon">~</span>
-                                    <input type="date" class="form-control" name="etime">
-                                </div>
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>검색</button>
-<button type="submit" class="btn btn-primary" method="post" formaction="xml.php"><span>Excel Download  <i class="glyphicon glyphicon-save"></i></span></button>
-</form>
-</div>
 
-
-
-
+<br>
 </body>
 </html>
+
+<script type='text/javascript'>
+
+ if (self.name != 'reload') {
+         self.name = 'reload';
+         self.location.reload(true);
+     }
+     else self.name = ''; 
+
+</script>
+
+
+
+
+
+
+
+
+
+
